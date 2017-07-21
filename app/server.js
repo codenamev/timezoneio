@@ -25,6 +25,17 @@ module.exports = function(mongooseConnection, redisClient) {
 
   var app = express();
 
+  var redisConfig = {
+    client: redisClient,
+    ttl: 14 * 86400 // 14 days expiration
+  };
+
+  if (isProduction) {
+    redisconfig.url = ENV.REDISURL;
+  } else {
+    redisConfig.host = 'redis';
+  }
+
   // Middleware
 
   // In production we use a CDN
@@ -49,12 +60,7 @@ module.exports = function(mongooseConnection, redisClient) {
     resave: false, //don't save session if unmodified
     saveUninitialized: false, // don't create session until something stored
     secret: 'bodhi',
-    store: new RedisStore({
-      client: redisClient,
-      host: isProduction ? '127.0.0.1' : 'redis',
-      url: isProduction ? ENV.REDIS_URL : '',
-      ttl: 14 * 86400 // 14 days expiration
-    })
+    store: new RedisStore(redisConfig)
   }));
 
   app.use(passport.initialize());
