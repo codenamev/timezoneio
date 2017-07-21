@@ -28,14 +28,9 @@ module.exports = function(mongooseConnection, redisClient) {
 
   var redisConfig = {
     client: redisClient,
+    url: ENV.REDIS_URL,
     ttl: 14 * 86400 // 14 days expiration
   };
-
-  if (isProduction) {
-    redisConfig.url = ENV.REDIS_URL;
-  } else {
-    redisConfig.host = 'redis';
-  }
 
   // Middleware
 
