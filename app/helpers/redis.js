@@ -1,11 +1,10 @@
 var redis = require('redis');
+var ENV = require('../../env');
 
-var redisConfig = {
-  ttl: 14 * 86400 // 14 days expiration
-};
+var redisConfig = {};
 
-if (process.env.NODE_ENV === 'production') {
-  redisConfig.url = process.env.REDIS_URL;
+if (ENV.NODE_ENV == 'production') {
+  redisConfig.url = ENV.REDIS_URL;
 } else {
   redisConfig.host = 'redis';
 }

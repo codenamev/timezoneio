@@ -10,6 +10,7 @@ var csrf = require('csurf');
 var multer = require('multer');
 var flash = require('connect-flash');
 var passport = require('passport');
+var ENV = require('../../env');
 
 
 require('node-jsx').install({extension: '.jsx'});
@@ -17,7 +18,7 @@ require('node-jsx').install({extension: '.jsx'});
 var stylusMiddleware = require('../config/middleware/stylus.js');
 var render = require('./helpers/render.js');
 
-const isProduction = process.env.NODE_ENV === 'production';
+const isProduction = ENV.NODE_ENV === 'production';
 
 module.exports = function(mongooseConnection, redisClient) {
 
@@ -31,7 +32,7 @@ module.exports = function(mongooseConnection, redisClient) {
   };
 
   if (isProduction) {
-    redisConfig.url = process.env.REDIS_URL;
+    redisConfig.url = ENV.REDIS_URL;
   } else {
     redisConfig.host = 'redis';
   }
