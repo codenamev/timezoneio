@@ -14,6 +14,7 @@
     "TWITTER_SECRET": "<your secret>",
 
     "SLACK_BOT_API_TOKEN": "<your secret api token>",
+    "REDIS_URL": "",
   },
   "ignore": ["public/**/*.js"],
   "ext": "js json hjs jsx"

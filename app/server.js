@@ -52,6 +52,7 @@ module.exports = function(mongooseConnection, redisClient) {
     store: new RedisStore({
       client: redisClient,
       host: isProduction ? '127.0.0.1' : 'redis',
+      url: isProduction ? ENV.REDIS_URL : '',
       ttl: 14 * 86400 // 14 days expiration
     })
   }));

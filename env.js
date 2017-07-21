@@ -18,7 +18,9 @@ const VARS = [
   'SLACK_CLIENT_ID',
   'SLACK_CLIENT_SECRET',
 
-  'SENDGRID_KEY'
+  'SENDGRID_KEY',
+
+  'REDIS_URL',
 ];
 
 module.exports = VARS.reduce(function(obj, key) {
