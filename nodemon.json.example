@@ -11,7 +11,9 @@
     "AWS_SECRET_KEY": "<your secret>",
 
     "TWITTER_KEY": "<your key>",
-    "TWITTER_SECRET": "<your secret>"
+    "TWITTER_SECRET": "<your secret>",
+
+    "SLACK_BOT_API_TOKEN": "<your secret api token>",
   },
   "ignore": ["public/**/*.js"],
   "ext": "js json hjs jsx"

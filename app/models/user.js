@@ -5,7 +5,9 @@ var Schema = mongoose.Schema;
 var userSettings = require('./sub/userSettings');
 var getProfileUrl = require('../helpers/urls').getProfileUrl;
 var isValidEmail = require('../utils/strings').isValidEmail;
+var APIAuthModel = require('./apiAuth');
 const ENV = require('../../env');
+const uuid = require('uuid/v4');
 
 // Inspiration: https://github.com/madhums/node-express-mongoose-demo/blob/master/app/models/user.js
 
@@ -18,6 +20,9 @@ var userSchema = new Schema({
   hashedPassword: { type: String, default: '' },
   salt: { type: String, default: '' },
   inviteCode: { type: String, default: '' }, // ???
+  apiAccessToken: { type: String, default: function genUUID() {
+    uuid();
+  }},
 
   // loginProvider: { type: String, default null },
   // facebook: {},
@@ -58,7 +63,8 @@ var PUBLIC_FIELDS = [
 
 var OWNER_FIELDS = PUBLIC_FIELDS.concat([
   'coords',
-  'email'
+  'email',
+  'apiAccessToken'
 ]);
 
 var ADMIN_FIELDS = PUBLIC_FIELDS.concat([
@@ -300,7 +306,19 @@ userSchema.methods = {
     if (this.teams) {
       json.teams = this.teams.map(function(t){ return t.toJSON(); });
     }
-    return json;
+
+    if (this.apiAccessToken) {
+      return json;
+    } else {
+      this.apiAccessToken = uuid();
+      this.save(function(err) {
+        if (err) {
+          console.error("Unable to update User token for: ", this._id);
+        }
+      });
+      json.apiAccessToken = this.apiAccessToken;
+      return json;
+    }
   },
 
   useAvatar: function(provider) {

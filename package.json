@@ -55,6 +55,7 @@
     "stylus": "0.54.5",
     "twitter": "1.7.0",
     "underscore": "^1.8.3",
+    "uuid": "^3.1.0",
     "webpack": "^1.12.6",
     "whatwg-fetch": "^0.10.0"
   },
