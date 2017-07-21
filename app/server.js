@@ -31,7 +31,7 @@ module.exports = function(mongooseConnection, redisClient) {
   };
 
   if (isProduction) {
-    redisconfig.url = ENV.REDISURL;
+    redisConfig.url = ENV.REDISURL;
   } else {
     redisConfig.host = 'redis';
   }
