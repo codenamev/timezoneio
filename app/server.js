@@ -17,7 +17,7 @@ require('node-jsx').install({extension: '.jsx'});
 var stylusMiddleware = require('../config/middleware/stylus.js');
 var render = require('./helpers/render.js');
 
-const isProduction = process.env.NODE_ENV === 'production';
+var isProduction = process.env.NODE_ENV === 'production';
 
 module.exports = function(mongooseConnection, redisClient) {
 
@@ -27,9 +27,15 @@ module.exports = function(mongooseConnection, redisClient) {
 
   var redisConfig = {
     client: redisClient,
-    url: process.env.REDIS_URL,
+    host: 'redis',
     ttl: 14 * 86400 // 14 days expiration
   };
+
+  // Use REDIS_URL if specified
+  if (process.env.REDIS_URL) {
+    redisConfig.url = process.env.REDIS_URL;
+    delete redisConfig.host;
+  }
 
   // Middleware
 
