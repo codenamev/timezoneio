@@ -14,10 +14,13 @@ const VARS = [
   'TWITTER_KEY',
   'TWITTER_SECRET',
 
+  'SLACK_BOT_API_TOKEN',
   'SLACK_CLIENT_ID',
   'SLACK_CLIENT_SECRET',
 
-  'SENDGRID_KEY'
+  'SENDGRID_KEY',
+
+  'REDIS_URL',
 ];
 
 module.exports = VARS.reduce(function(obj, key) {

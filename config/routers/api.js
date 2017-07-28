@@ -7,6 +7,8 @@ var router = express.Router();
 
 router.get('/self', api.userGetSelf);
 
+router.post('/slacky', access.requireApiAccessToken, api.consumeSlack);
+
 router.all('*', access.requireAuthentication);
 
 router.get('/user', access.requireTeamAdmin, api.getUserByEmail);

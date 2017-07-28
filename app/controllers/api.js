@@ -460,3 +460,25 @@ api.getOrCreateAPIClientToken = function(req, res) {
   });
 
 };
+
+api.consumeSlack = function(req, res) {
+  var payload = (req.body || req.query);
+
+  if (payload.message || !payload.challenge) {
+    //res.status(200).json({ challenge: payload.challenge });
+    res.status(200).json({
+      "attachments": [
+        {
+          "fallback": "Doxer's timezones.",
+          "color": "#36a64f",
+          "title": "All Doxer's Timezones",
+          "title_link": "https://dox-timezone-slacky.herokuapp.com/team/general",
+          "text": "A nice searchable list by timezone."
+        }
+      ]
+    });
+  } else {
+    // Required to handle initial Slack connection
+    res.json({ challenge: payload.challenge });
+  }
+}

@@ -2,9 +2,35 @@ var UserModel = require('../../app/models/user');
 var TeamModel = require('../../app/models/team');
 var APIClientModel = require('../../app/models/apiClient');
 var APIAuthModel = require('../../app/models/apiAuth');
+var ENV = require('../../env');
 
 var access = module.exports = {};
 
+
+access.requireApiAccessToken = function(req, res, next) {
+  var accessToken = req.query.access_token || req.body.access_token || null;
+
+  if (accessToken && accessToken == ENV.SLACK_BOT_API_TOKEN) {
+    next();
+    return;
+  } else if (accessToken) {
+    UserModel.findOne({ accessToken: accessToken }, function(err, user) {
+      if (err || !user)
+        return res.status(403).json({
+          message: 'Invalid token :('
+        });
+
+      req.user = user
+      next();
+    });
+    return;
+  }
+
+  res.status(403).json({
+    message: 'Ah ah ah, you didn\'t say the magic word',
+    url:req.baseUrl
+  });
+};
 
 access.allowImpersonate = function(req, res, next) {
 
