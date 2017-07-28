@@ -466,7 +466,19 @@ api.consumeSlack = function(req, res) {
 
   if (payload.message || !payload.challenge) {
     //res.status(200).json({ challenge: payload.challenge });
-    res.status(200).json({});
+    res.status(200).json({
+      "attachments": [
+        {
+          "fallback": "Doxer's timezones.",
+          "color": "#36a64f",
+          "title": "All Doxer's Timezones",
+          "title_link": "https://api.slack.com/",
+          "text": "A nice searchable list by timezone.",
+          "image_url": "http://my-website.com/path/to/image.jpg",
+          "thumb_url": "http://example.com/path/to/thumb.png"
+        }
+      ]
+    });
   } else {
     // Required to handle initial Slack connection
     res.json({ challenge: payload.challenge });
