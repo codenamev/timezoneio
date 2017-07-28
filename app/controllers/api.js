@@ -472,10 +472,8 @@ api.consumeSlack = function(req, res) {
           "fallback": "Doxer's timezones.",
           "color": "#36a64f",
           "title": "All Doxer's Timezones",
-          "title_link": "https://api.slack.com/",
-          "text": "A nice searchable list by timezone.",
-          "image_url": "http://my-website.com/path/to/image.jpg",
-          "thumb_url": "http://example.com/path/to/thumb.png"
+          "title_link": "https://dox-timezone-slacky.herokuapp.com/team/general",
+          "text": "A nice searchable list by timezone."
         }
       ]
     });
