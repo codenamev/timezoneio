@@ -463,7 +463,6 @@ api.getOrCreateAPIClientToken = function(req, res) {
 
 api.consumeSlack = function(req, res) {
   var payload = (req.body || req.query);
-  console.log("consumeSlack", payload);
 
   if (payload.message || !payload.challenge) {
     //res.status(200).json({ challenge: payload.challenge });

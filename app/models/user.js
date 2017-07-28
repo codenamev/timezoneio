@@ -5,9 +5,7 @@ var Schema = mongoose.Schema;
 var userSettings = require('./sub/userSettings');
 var getProfileUrl = require('../helpers/urls').getProfileUrl;
 var isValidEmail = require('../utils/strings').isValidEmail;
-var APIAuthModel = require('./apiAuth');
 const ENV = require('../../env');
-const uuid = require('uuid/v4');
 
 // Inspiration: https://github.com/madhums/node-express-mongoose-demo/blob/master/app/models/user.js
 
@@ -20,8 +18,8 @@ var userSchema = new Schema({
   hashedPassword: { type: String, default: '' },
   salt: { type: String, default: '' },
   inviteCode: { type: String, default: '' }, // ???
-  apiAccessToken: { type: String, default: function genUUID() {
-    uuid();
+  apiAccessToken: { type: String, default: function genApiToken() {
+    crypto.createHash('md5').digest('hex');
   }},
 
   // loginProvider: { type: String, default null },
@@ -274,6 +272,10 @@ userSchema.methods = {
                  .digest('hex');
   },
 
+  createApiAccessToken: function() {
+    return crypto.createHash('md5').digest('hex');
+  },
+
   isSuperAdmin: function() {
     return this._id.toString() === SUPER_ADMIN_ID;
   },
@@ -310,7 +312,7 @@ userSchema.methods = {
     if (this.apiAccessToken) {
       return json;
     } else {
-      this.apiAccessToken = uuid();
+      this.apiAccessToken = createApiAccessToken();
       this.save(function(err) {
         if (err) {
           console.error("Unable to update User token for: ", this._id);

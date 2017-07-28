@@ -21,9 +21,7 @@ access.requireApiAccessToken = function(req, res, next) {
         });
 
       req.user = user
-
       next();
-
     });
     return;
   }

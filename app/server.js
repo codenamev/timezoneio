@@ -17,7 +17,7 @@ require('node-jsx').install({extension: '.jsx'});
 var stylusMiddleware = require('../config/middleware/stylus.js');
 var render = require('./helpers/render.js');
 
-var isProduction = process.env.NODE_ENV === 'production';
+const isProduction = process.env.NODE_ENV === 'production';
 
 module.exports = function(mongooseConnection, redisClient) {
 
